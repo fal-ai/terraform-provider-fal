@@ -44,9 +44,11 @@ func (f *Client) List(ctx context.Context) ([]*App, error) {
 
 	output := readAll(c)
 
-	var result []*App
+	var result struct {
+		Apps []*App `json:"apps"`
+	}
 	if err := json.Unmarshal([]byte(output), &result); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return result.Apps, nil
 }
