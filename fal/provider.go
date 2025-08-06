@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	userAgentForProvider = "Client-Terraform-Provider"
+	userAgentForProvider = "Fal-Terraform-Provider"
 )
 
 var currentVersion = "1.0.0"

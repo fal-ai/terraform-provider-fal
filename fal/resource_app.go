@@ -16,7 +16,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 const (
@@ -344,14 +343,6 @@ func (r *AppResource) readApp(ctx context.Context, data *AppResourceModel, diags
 }
 
 func (r *AppResource) deployApp(ctx context.Context, data *AppResourceModel, diags *diag.Diagnostics) {
-	var gitConfig Git
-	if !data.Git.IsNull() {
-		diags.Append(data.Git.As(ctx, &gitConfig, basetypes.ObjectAsOptions{})...)
-		if diags.HasError() {
-			return
-		}
-	}
-
 	gd := gitFromResourceModel(ctx, data)
 
 	git, err := gd.Client()
