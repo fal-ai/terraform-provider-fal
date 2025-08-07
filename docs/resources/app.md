@@ -17,7 +17,7 @@ The fal_app resource allows you to create and manage fal serverless deployments.
 resource "fal_app" "sana_app" {
   entrypoint = "fal_demos/image/sana.py"
   git = {
-    url    = "https://github.com/fal-ai-community/fal-demos.git"
+    url = "https://github.com/fal-ai-community/fal-demos.git"
   }
 }
 ```

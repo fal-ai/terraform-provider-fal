@@ -14,7 +14,7 @@ Using this provider, you can automate the provisioning and management of your fa
 ~> **Warning**
 This provider leverages external binaries, which are required for it to operate. This can sometimes violate many of Terraform's assumptions (i.e. this provider will not work in HCP Terraform), so resources here are best used with care.
 
-## Prerequisites
+## Requirements
 You will need to [install uv](https://docs.astral.sh/uv/getting-started/installation/) into your Terraform host environment.
 
 If you're running Terraform in GitHub Actions, an example of this might look like:
