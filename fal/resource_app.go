@@ -107,7 +107,7 @@ func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Default: stringdefault.StaticString(defaultStrategy),
 			},
 			"auth_mode": schema.StringAttribute{
-				MarkdownDescription: fmt.Sprintf("The app auth mode. Available values: `public`, `private`. Defaults to `%s`.", defaultAuthMode),
+				MarkdownDescription: fmt.Sprintf("The app auth mode. Available values: `public`, `private`, `shared`. Defaults to `%s`.", defaultAuthMode),
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

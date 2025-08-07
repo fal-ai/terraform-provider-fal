@@ -17,6 +17,7 @@ type AuthMode string
 const (
 	AuthModePublic  AuthMode = "public"
 	AuthModePrivate AuthMode = "private"
+	AuthModeShared  AuthMode = "shared"
 )
 
 type Client struct {
