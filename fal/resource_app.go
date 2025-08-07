@@ -62,9 +62,9 @@ type Git struct {
 
 // AppResourceModel describes the resource data model.
 type AppResourceModel struct {
+	Name       types.String `tfsdk:"name"`
 	RevisionID types.String `tfsdk:"revision_id"`
 
-	Name       types.String `tfsdk:"name"`
 	Entrypoint types.String `tfsdk:"entrypoint"`
 	Strategy   types.String `tfsdk:"strategy"`
 	AuthMode   types.String `tfsdk:"auth_mode"`
@@ -79,13 +79,9 @@ func (r *AppResource) Metadata(ctx context.Context, req resource.MetadataRequest
 
 func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "App resource",
+		MarkdownDescription: "The fal_app resource allows you to create and manage fal serverless deployments. Read more about deployments in the fal documentation: https://docs.fal.ai/serverless/deployment-operations/deploy-to-production#persistent-deployments",
 
 		Attributes: map[string]schema.Attribute{
-			"revision_id": schema.StringAttribute{
-				MarkdownDescription: "The app's revision id",
-				Computed:            true,
-			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The app's name",
 				Computed:            true,
@@ -93,12 +89,16 @@ func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"revision_id": schema.StringAttribute{
+				MarkdownDescription: "The app's revision id",
+				Computed:            true,
+			},
 			"entrypoint": schema.StringAttribute{
 				MarkdownDescription: "The app deployment entrypoint",
 				Required:            true,
 			},
 			"strategy": schema.StringAttribute{
-				MarkdownDescription: fmt.Sprintf("The app deployment strategy. Defaults to `%s`.", defaultStrategy),
+				MarkdownDescription: fmt.Sprintf("The app deployment strategy. Available values: `rolling`, `recreate`. Defaults to `%s`.", defaultStrategy),
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -107,21 +107,13 @@ func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Default: stringdefault.StaticString(defaultStrategy),
 			},
 			"auth_mode": schema.StringAttribute{
-				MarkdownDescription: fmt.Sprintf("The app auth mode.  Defaults to `%s`.", defaultAuthMode),
+				MarkdownDescription: fmt.Sprintf("The app auth mode. Available values: `public`, `private`. Defaults to `%s`.", defaultAuthMode),
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("public", "private", "shared"),
 				},
 				Default: stringdefault.StaticString(defaultAuthMode),
-			},
-			"created_at": schema.StringAttribute{
-				MarkdownDescription: "The timestamp for when the app was created",
-				Computed:            true,
-			},
-			"updated_at": schema.StringAttribute{
-				MarkdownDescription: "The timestamp for the last time the app was updated",
-				Computed:            true,
 			},
 			"git": schema.SingleNestedAttribute{
 				Description: "Configuration block with settings for fal's app deployer.",
@@ -183,6 +175,14 @@ func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 					},
 				},
 				Required: true,
+			},
+			"created_at": schema.StringAttribute{
+				MarkdownDescription: "The timestamp for when the app was created",
+				Computed:            true,
+			},
+			"updated_at": schema.StringAttribute{
+				MarkdownDescription: "The timestamp for the last time the app was updated",
+				Computed:            true,
 			},
 		},
 	}
