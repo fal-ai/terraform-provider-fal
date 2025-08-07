@@ -8,6 +8,7 @@ import (
 
 	"github.com/fal-ai/terraform-provider-fal/internal/fal"
 	"github.com/fal-ai/terraform-provider-fal/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -101,7 +102,7 @@ func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.OneOf("rolling", "recreate"),
+					stringvalidator.OneOf("rolling", "recreate"),
 				},
 				Default: stringdefault.StaticString(defaultStrategy),
 			},
@@ -110,7 +111,7 @@ func (r *AppResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.OneOf("public", "private"),
+					stringvalidator.OneOf("public", "private", "shared"),
 				},
 				Default: stringdefault.StaticString(defaultAuthMode),
 			},

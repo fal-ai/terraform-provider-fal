@@ -7,6 +7,7 @@ tool github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
 require (
 	github.com/go-git/go-git/v6 v6.0.0-20250728093604-6aaf1933ecab
 	github.com/hashicorp/terraform-plugin-framework v1.15.1
+	github.com/hashicorp/terraform-plugin-framework-validators v0.18.0
 )
 
 require (
