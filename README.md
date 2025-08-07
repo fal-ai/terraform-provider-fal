@@ -31,25 +31,25 @@ jobs:
 
 Add the following to your `main.tf` file:
 ```terraform
-    terraform {
-      required_providers {
-        fal = {
-          source = "fal-ai/fal"
-          version = "~> 1"
-        }
-      }
+terraform {
+  required_providers {
+    fal = {
+      source = "fal-ai/fal"
+      version = "~> 1"
     }
-   
-    provider "fal" {
-      fal_key = "<fal key here>"
-    }
-    
-    resource "fal_app" "sana_app" {
-      entrypoint = "fal_demos/image/sana.py"
-      git = {
-        url = "https://github.com/fal-ai-community/fal-demos.git"
-      }
-    }
+  }
+}
+
+provider "fal" {
+  fal_key = "<fal key here>"
+}
+
+resource "fal_app" "sana_app" {
+  entrypoint = "fal_demos/image/sana.py"
+  git = {
+    url = "https://github.com/fal-ai-community/fal-demos.git"
+  }
+}
 ```
 
 Initialize your project by running `terraform init` in the directory.
