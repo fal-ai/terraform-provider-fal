@@ -51,8 +51,8 @@ resource "fal_app" "sana_app" {
 
 ### Optional
 
-- `auth_mode` (String) The app auth mode. Defaults to `private`.
-- `strategy` (String) The app deployment strategy. Defaults to `rolling`.
+- `auth_mode` (String) The app auth mode. Available values: `public`, `private`, `shared`. Defaults to `private`.
+- `strategy` (String) The app deployment strategy. Available values: `rolling`, `recreate`. Defaults to `rolling`.
 
 ### Read-Only
 
