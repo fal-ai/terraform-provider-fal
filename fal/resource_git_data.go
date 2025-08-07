@@ -39,10 +39,10 @@ func (ard *gitData) Client() (*git.Client, error) {
 	return client, nil
 }
 
-func (ard *gitData) RepositoryURL() *url.URL {
+func (ard *gitData) RepositoryURL() (*url.URL, error) {
 	repositoryURL, err := url.Parse(ard.git.URL.ValueString())
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error parsing url: %w", err)
 	}
 	if ard.git.HTTP != nil {
 		repositoryURL.User = nil
@@ -52,18 +52,18 @@ func (ard *gitData) RepositoryURL() *url.URL {
 			repositoryURL.User = url.User(ard.git.SSH.Username.ValueString())
 		}
 	}
-	return repositoryURL
+	return repositoryURL, nil
 }
 
 func getAuthOpts(g *Git) (*git.AuthOpts, error) {
 	u, err := url.Parse(g.URL.ValueString())
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error parsing url: %w", err)
 	}
 	switch u.Scheme {
 	case "http":
 		if g.HTTP == nil {
-			return nil, fmt.Errorf("Git URL scheme is http but http configuration is empty")
+			return &git.AuthOpts{}, nil
 		}
 		return &git.AuthOpts{
 			AuthMethod: &http.BasicAuth{
@@ -73,7 +73,7 @@ func getAuthOpts(g *Git) (*git.AuthOpts, error) {
 		}, nil
 	case "https":
 		if g.HTTP == nil {
-			return nil, fmt.Errorf("Git URL scheme is https but http configuration is empty")
+			return &git.AuthOpts{}, nil
 		}
 		return &git.AuthOpts{
 			AuthMethod: &http.BasicAuth{

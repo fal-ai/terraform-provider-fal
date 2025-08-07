@@ -351,8 +351,12 @@ func (r *AppResource) deployApp(ctx context.Context, data *AppResourceModel, dia
 		return
 	}
 
-	repoURL := gd.RepositoryURL().String()
-	res, err := r.client.Deploy(ctx, git, repoURL, &fal.DeployOpts{
+	repoURL, err := gd.RepositoryURL()
+	if err != nil {
+		diags.AddError("Client Error", "Unable to get repository url, got error: "+err.Error())
+		return
+	}
+	res, err := r.client.Deploy(ctx, git, repoURL.String(), &fal.DeployOpts{
 		Entrypoint: data.Entrypoint.ValueString(),
 		Strategy:   fal.DeployStrategy(data.Strategy.ValueString()),
 		AuthMode:   fal.AuthMode(data.AuthMode.ValueString()),
